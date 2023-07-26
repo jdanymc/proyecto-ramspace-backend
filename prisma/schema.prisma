@@ -1,0 +1,180 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model tbl_articulo {
+  idarticulo          Int                   @id @default(autoincrement())
+  idmarca             Int
+  idtipoproducto      Int
+  idcategoria         Int
+  idunidadmedida      Int
+  nombre              String?               @db.VarChar(200)
+  descripcion         String?               @db.LongText
+  et                  String?               @db.LongText
+  precio              Decimal?              @db.Decimal(10, 2)
+  imagen              String?               @db.VarChar(100)
+  stock               Int?
+  sku                 String?               @db.VarChar(100)
+  tbl_marca           tbl_marca             @relation(fields: [idmarca], references: [idmarca], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_articulo_tbl_marca1")
+  tbl_categoria       tbl_categoria         @relation(fields: [idcategoria], references: [idcategoria], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_articulo_tbl_subcategoria1")
+  tbl_tipo_producto   tbl_tipo_producto     @relation(fields: [idtipoproducto], references: [idtipoproducto], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_articulo_tbl_tipo_producto1")
+  tbl_unidad_medida   tbl_unidad_medida     @relation(fields: [idunidadmedida], references: [idunidadmedida], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_articulo_tbl_unidad_medida1")
+  tbl_articulo_imagen tbl_articulo_imagen[]
+  tbl_pedido_detalle  tbl_pedido_detalle[]
+
+  @@index([idmarca], map: "fk_tbl_articulo_tbl_marca1_idx")
+  @@index([idcategoria], map: "fk_tbl_articulo_tbl_subcategoria1_idx")
+  @@index([idtipoproducto], map: "fk_tbl_articulo_tbl_tipo_producto1_idx")
+  @@index([idunidadmedida], map: "fk_tbl_articulo_tbl_unidad_medida1_idx")
+}
+
+model tbl_articulo_imagen {
+  idarticuloimagen Int          @id
+  idarticulo       Int          @default(autoincrement())
+  imagen           String       @db.VarChar(255)
+  tbl_articulo     tbl_articulo @relation(fields: [idarticulo], references: [idarticulo], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_articulo_imagen_tbl_articulo1")
+
+  @@index([idarticulo], map: "fk_tbl_articulo_imagen_tbl_articulo1_idx")
+}
+
+model tbl_categoria {
+  idcategoria         Int             @id @default(autoincrement())
+  descripcion         String          @db.VarChar(255)
+  estado              Int?
+  idcategoriapadre    Int
+  tbl_articulo        tbl_articulo[]
+  tbl_categoria       tbl_categoria   @relation("tbl_categoriaTotbl_categoria", fields: [idcategoriapadre], references: [idcategoria], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_categoria_tbl_categoria1")
+  other_tbl_categoria tbl_categoria[] @relation("tbl_categoriaTotbl_categoria")
+
+  @@index([idcategoriapadre], map: "fk_tbl_categoria_tbl_categoria1_idx")
+}
+
+model tbl_cliente {
+  idcliente       Int          @id @default(autoincrement())
+  idusuario       Int
+  numerodocumento String?      @db.VarChar(45)
+  telefono        String?      @db.VarChar(45)
+  fechanacimiento DateTime?    @db.Date
+  direccion       String?      @db.VarChar(100)
+  estado          Int?
+  tbl_usuario     tbl_usuario  @relation(fields: [idusuario], references: [idusuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_cliente_tbl_usuario1")
+  tbl_pedido      tbl_pedido[]
+
+  @@index([idusuario], map: "fk_tbl_cliente_tbl_usuario1_idx")
+}
+
+model tbl_descuento {
+  iddescuento          Int                    @id @default(autoincrement())
+  descripcion          String                 @db.VarChar(255)
+  codigo               String?                @db.VarChar(45)
+  estado               String?                @db.VarChar(45)
+  porcentaje           Decimal?               @db.Decimal(10, 2)
+  tbl_pedido_descuento tbl_pedido_descuento[]
+}
+
+model tbl_marca {
+  idmarca      Int            @id @default(autoincrement())
+  descripcion  String?        @db.VarChar(100)
+  estado       Int?
+  tbl_articulo tbl_articulo[]
+}
+
+model tbl_metodo_pago {
+  idmetodopago Int          @id @default(autoincrement())
+  descripcion  String?      @db.VarChar(100)
+  estado       Int?         @default(1)
+  tbl_pedido   tbl_pedido[]
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_pedido {
+  idpedido             Int                    @id @default(autoincrement())
+  idcliente            Int
+  idubigeoenvio        Int
+  idmetodopago         Int
+  fecharegistro        DateTime?              @db.DateTime(0)
+  nropedido            String?                @db.VarChar(45)
+  montotal             Decimal?               @db.Decimal(10, 2)
+  direccionenvio       String?                @db.LongText
+  estrellas            Int?
+  acusepago            String?                @db.VarChar(100)
+  estadoenvio          Int?
+  observacion          String?                @db.Text
+  tbl_cliente          tbl_cliente            @relation(fields: [idcliente], references: [idcliente], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_pedido_tbl_cliente1")
+  tbl_metodo_pago      tbl_metodo_pago        @relation(fields: [idmetodopago], references: [idmetodopago], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_pedido_tbl_metodo_pago1")
+  tbl_ubigeo           tbl_ubigeo             @relation(fields: [idubigeoenvio], references: [idubigeo], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_pedido_tbl_ubigeo1")
+  tbl_pedido_descuento tbl_pedido_descuento[]
+  tbl_pedido_detalle   tbl_pedido_detalle[]
+
+  @@index([idcliente], map: "fk_tbl_pedido_tbl_cliente1_idx")
+  @@index([idmetodopago], map: "fk_tbl_pedido_tbl_metodo_pago1_idx")
+  @@index([idubigeoenvio], map: "fk_tbl_pedido_tbl_ubigeo1_idx")
+}
+
+model tbl_pedido_descuento {
+  idpedidodescuento Int           @id @default(autoincrement())
+  iddescuento       Int
+  idpedido          Int
+  tbl_descuento     tbl_descuento @relation(fields: [iddescuento], references: [iddescuento], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_pedido_descuento_tbl_descuento1")
+  tbl_pedido        tbl_pedido    @relation(fields: [idpedido], references: [idpedido], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_pedido_descuento_tbl_pedido1")
+
+  @@index([iddescuento], map: "fk_tbl_pedido_descuento_tbl_descuento1_idx")
+  @@index([idpedido], map: "fk_tbl_pedido_descuento_tbl_pedido1_idx")
+}
+
+model tbl_pedido_detalle {
+  idpedidodetalle Int          @id @default(autoincrement())
+  idarticulo      Int
+  idpedido        Int
+  cantidad        Int?
+  preciounitario  Decimal?     @db.Decimal(10, 2)
+  subtotal        Decimal?     @db.Decimal(10, 2)
+  tbl_articulo    tbl_articulo @relation(fields: [idarticulo], references: [idarticulo], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_pedidodetalle_tbl_articulo")
+  tbl_pedido      tbl_pedido   @relation(fields: [idpedido], references: [idpedido], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_pedidodetalle_tbl_pedido1")
+
+  @@index([idarticulo], map: "fk_tbl_pedidodetalle_tbl_articulo_idx")
+  @@index([idpedido], map: "fk_tbl_pedidodetalle_tbl_pedido1_idx")
+}
+
+model tbl_tipo_producto {
+  idtipoproducto Int            @id @default(autoincrement())
+  descripcion    String         @db.VarChar(255)
+  estado         Int?
+  tbl_articulo   tbl_articulo[]
+}
+
+model tbl_ubigeo {
+  idubigeo     Int          @id @default(autoincrement())
+  pais         String?      @db.VarChar(255)
+  departamento String?      @db.VarChar(45)
+  provincia    String?      @db.VarChar(45)
+  distrito     String?      @db.VarChar(45)
+  descripcion  String?      @db.VarChar(45)
+  estado       Int?
+  tbl_pedido   tbl_pedido[]
+}
+
+model tbl_unidad_medida {
+  idunidadmedida Int            @id @default(autoincrement())
+  descripcion    String         @db.VarChar(255)
+  estado         Int?
+  tbl_articulo   tbl_articulo[]
+}
+
+model tbl_usuario {
+  idusuario       Int           @id @default(autoincrement())
+  email           String?       @unique(map: "email_UNIQUE") @db.VarChar(255)
+  password        String?       @db.VarChar(32)
+  tipo            Int?
+  primerapellido  String?       @db.VarChar(100)
+  segundoapellido String?       @db.VarChar(100)
+  nombres         String?       @db.VarChar(100)
+  imagen          String?       @db.VarChar(100)
+  estado          Int?
+  tbl_cliente     tbl_cliente[]
+}
