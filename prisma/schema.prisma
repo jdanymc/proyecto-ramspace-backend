@@ -34,8 +34,8 @@ model tbl_articulo {
 }
 
 model tbl_articulo_imagen {
-  idarticuloimagen Int          @id
-  idarticulo       Int          @default(autoincrement())
+  idarticuloimagen Int          @id @default(autoincrement())
+  idarticulo       Int          
   imagen           String       @db.VarChar(255)
   tbl_articulo     tbl_articulo @relation(fields: [idarticulo], references: [idarticulo], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_articulo_imagen_tbl_articulo1")
 
@@ -169,7 +169,7 @@ model tbl_unidad_medida {
 model tbl_usuario {
   idusuario       Int           @id @default(autoincrement())
   email           String?       @unique(map: "email_UNIQUE") @db.VarChar(255)
-  password        String?       @db.VarChar(32)
+  password        String?       @db.VarChar(200)
   tipo            Int?
   primerapellido  String?       @db.VarChar(100)
   segundoapellido String?       @db.VarChar(100)
