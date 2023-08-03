@@ -24,6 +24,9 @@ router.get("/marca/:id",async (req,res)=>{
     const data = await prisma.tbl_marca.findUnique({
         where: {
             idmarca: parseInt(req.params.id)
+        },
+        include:{
+            tbl_articulo:true
         }
     })
     if (!data) {

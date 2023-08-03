@@ -17,7 +17,7 @@ model tbl_articulo {
   descripcion         String?               @db.LongText
   et                  String?               @db.LongText
   precio              Decimal?              @db.Decimal(10, 2)
-  imagen              String?               @db.VarChar(100)
+  imagen              String?               @db.VarChar(200)
   stock               Int?
   sku                 String?               @db.VarChar(100)
   tbl_marca           tbl_marca             @relation(fields: [idmarca], references: [idmarca], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_articulo_tbl_marca1")
@@ -35,7 +35,7 @@ model tbl_articulo {
 
 model tbl_articulo_imagen {
   idarticuloimagen Int          @id @default(autoincrement())
-  idarticulo       Int          
+  idarticulo       Int
   imagen           String       @db.VarChar(255)
   tbl_articulo     tbl_articulo @relation(fields: [idarticulo], references: [idarticulo], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_articulo_imagen_tbl_articulo1")
 
@@ -45,10 +45,10 @@ model tbl_articulo_imagen {
 model tbl_categoria {
   idcategoria         Int             @id @default(autoincrement())
   descripcion         String          @db.VarChar(255)
-  estado              Int?
-  idcategoriapadre    Int
+  estado              Int?            @default(1)
+  idcategoriapadre    Int?
   tbl_articulo        tbl_articulo[]
-  tbl_categoria       tbl_categoria   @relation("tbl_categoriaTotbl_categoria", fields: [idcategoriapadre], references: [idcategoria], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_categoria_tbl_categoria1")
+  tbl_categoria       tbl_categoria?  @relation("tbl_categoriaTotbl_categoria", fields: [idcategoriapadre], references: [idcategoria], onDelete: NoAction, onUpdate: NoAction, map: "fk_tbl_categoria_tbl_categoria1")
   other_tbl_categoria tbl_categoria[] @relation("tbl_categoriaTotbl_categoria")
 
   @@index([idcategoriapadre], map: "fk_tbl_categoria_tbl_categoria1_idx")
@@ -72,7 +72,7 @@ model tbl_descuento {
   iddescuento          Int                    @id @default(autoincrement())
   descripcion          String                 @db.VarChar(255)
   codigo               String?                @db.VarChar(45)
-  estado               String?                @db.VarChar(45)
+  estado               Int?                   @default(1)
   porcentaje           Decimal?               @db.Decimal(10, 2)
   tbl_pedido_descuento tbl_pedido_descuento[]
 }
@@ -80,7 +80,7 @@ model tbl_descuento {
 model tbl_marca {
   idmarca      Int            @id @default(autoincrement())
   descripcion  String?        @db.VarChar(100)
-  estado       Int?
+  estado       Int?           @default(1)
   tbl_articulo tbl_articulo[]
 }
 
@@ -144,7 +144,7 @@ model tbl_pedido_detalle {
 model tbl_tipo_producto {
   idtipoproducto Int            @id @default(autoincrement())
   descripcion    String         @db.VarChar(255)
-  estado         Int?
+  estado         Int?           @default(1)
   tbl_articulo   tbl_articulo[]
 }
 
@@ -155,14 +155,14 @@ model tbl_ubigeo {
   provincia    String?      @db.VarChar(45)
   distrito     String?      @db.VarChar(45)
   descripcion  String?      @db.VarChar(45)
-  estado       Int?
+  estado       Int?         @default(1)
   tbl_pedido   tbl_pedido[]
 }
 
 model tbl_unidad_medida {
   idunidadmedida Int            @id @default(autoincrement())
   descripcion    String         @db.VarChar(255)
-  estado         Int?
+  estado         Int?           @default(1)
   tbl_articulo   tbl_articulo[]
 }
 
@@ -170,11 +170,11 @@ model tbl_usuario {
   idusuario       Int           @id @default(autoincrement())
   email           String?       @unique(map: "email_UNIQUE") @db.VarChar(255)
   password        String?       @db.VarChar(200)
-  tipo            Int?
+  tipo            Int?          @default(2)
   primerapellido  String?       @db.VarChar(100)
   segundoapellido String?       @db.VarChar(100)
   nombres         String?       @db.VarChar(100)
   imagen          String?       @db.VarChar(100)
-  estado          Int?
+  estado          Int?          @default(1)
   tbl_cliente     tbl_cliente[]
 }
