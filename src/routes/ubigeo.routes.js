@@ -1,5 +1,5 @@
 const express = require("express");
-const prisma = require("../db");
+const {prisma,verifyToken} = require("../db");
 const router = express.Router();
 
 router.get('/ubigeo',async(req,res)=>{
@@ -10,7 +10,7 @@ router.get('/ubigeo',async(req,res)=>{
     })
 })
 
-router.post('/ubigeo',async(req,res)=>{
+router.post('/ubigeo',verifyToken,async(req,res)=>{
     const newData = await prisma.tbl_ubigeo.create({
         data:req.body
     })
@@ -37,7 +37,7 @@ router.get("/ubigeo/:id",async (req,res)=>{
     })
 })
 
-router.put("/ubigeo/:id",async (req,res)=>{
+router.put("/ubigeo/:id",verifyToken,async (req,res)=>{
     const data = await prisma.tbl_ubigeo.update({
         where: {
             idubigeo: parseInt(req.params.id)
@@ -55,7 +55,7 @@ router.put("/ubigeo/:id",async (req,res)=>{
     })
 })
 
-router.delete("/ubigeo/:id",async (req,res)=>{
+router.delete("/ubigeo/:id",verifyToken,async (req,res)=>{
     const data = await prisma.tbl_ubigeo.delete({
         where: {
             idubigeo: parseInt(req.params.id)

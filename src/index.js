@@ -16,8 +16,11 @@ const ubigeoApi = require("./routes/ubigeo.routes");
 const unidad_medidaApi = require("./routes/unidad_medida.routes");
 const usuarioApi = require("./routes/usuario.routes");
 
+const cors = require('cors')
 
 const app = express();
+
+app.use(cors())
 app.use(express.json());
 
 app.get('/',(req,res)=>{

@@ -1,5 +1,5 @@
 const express = require("express");
-const prisma = require("../db");
+const {prisma,verifyToken} = require("../db");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -44,7 +44,7 @@ router.get("/usuario/:id", async (req, res) => {
   });
 });
 
-router.put("/usuario/:id", async (req, res) => {
+router.put("/usuario/:id",verifyToken, async (req, res) => {
   const data = await prisma.tbl_usuario.update({
     where: {
       idusuario: parseInt(req.params.id),
@@ -62,7 +62,7 @@ router.put("/usuario/:id", async (req, res) => {
   });
 });
 
-router.delete("/usuario/:id", async (req, res) => {
+router.delete("/usuario/:id", verifyToken, async (req, res) => {
   const data = await prisma.tbl_usuario.delete({
     where: {
       idusuario: parseInt(req.params.id),

@@ -1,5 +1,5 @@
 const express = require("express");
-const prisma = require("../db");
+const {prisma,verifyToken} = require("../db");
 const router = express.Router();
 
 router.get('/cliente',async(req,res)=>{
@@ -10,7 +10,7 @@ router.get('/cliente',async(req,res)=>{
     })
 })
 
-router.post('/cliente',async(req,res)=>{
+router.post('/cliente',verifyToken,async(req,res)=>{
     const newData = await prisma.tbl_cliente.create({
         data:req.body
     })
@@ -20,7 +20,7 @@ router.post('/cliente',async(req,res)=>{
     })
 })
 
-router.get("/cliente/:id",async (req,res)=>{
+router.get("/cliente/:id",verifyToken,async (req,res)=>{
     const data = await prisma.tbl_cliente.findUnique({
         where: {
             idcliente: parseInt(req.params.id)
@@ -37,7 +37,7 @@ router.get("/cliente/:id",async (req,res)=>{
     })
 })
 
-router.put("/cliente/:id",async (req,res)=>{
+router.put("/cliente/:id",verifyToken,async (req,res)=>{
     const data = await prisma.tbl_cliente.update({
         where: {
             idcliente: parseInt(req.params.id)
@@ -55,7 +55,7 @@ router.put("/cliente/:id",async (req,res)=>{
     })
 })
 
-router.delete("/cliente/:id",async (req,res)=>{
+router.delete("/cliente/:id",verifyToken,async (req,res)=>{
     const data = await prisma.tbl_cliente.delete({
         where: {
             idcliente: parseInt(req.params.id)

@@ -1,6 +1,7 @@
 const express = require("express");
-const prisma = require("../db");
+const {prisma,verifyToken} = require("../db");
 const router = express.Router();
+
 
 router.get('/marca',async(req,res)=>{
     const data = await prisma.tbl_marca.findMany()
@@ -10,7 +11,7 @@ router.get('/marca',async(req,res)=>{
     })
 })
 
-router.post('/marca',async(req,res)=>{
+router.post('/marca',verifyToken,async(req,res)=>{
     const newData = await prisma.tbl_marca.create({
         data:req.body
     })
@@ -40,7 +41,7 @@ router.get("/marca/:id",async (req,res)=>{
     })
 })
 
-router.put("/marca/:id",async (req,res)=>{
+router.put("/marca/:id",verifyToken,async (req,res)=>{
     const data = await prisma.tbl_marca.update({
         where: {
             idmarca: parseInt(req.params.id)
@@ -58,7 +59,7 @@ router.put("/marca/:id",async (req,res)=>{
     })
 })
 
-router.delete("/marca/:id",async (req,res)=>{
+router.delete("/marca/:id",verifyToken,async (req,res)=>{
     const data = await prisma.tbl_marca.delete({
         where: {
             idmarca: parseInt(req.params.id)

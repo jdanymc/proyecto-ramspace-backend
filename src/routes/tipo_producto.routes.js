@@ -1,5 +1,5 @@
 const express = require("express");
-const prisma = require("../db");
+const {prisma,verifyToken} = require("../db");
 const router = express.Router();
 
 router.get('/tipo_producto',async(req,res)=>{
@@ -10,7 +10,7 @@ router.get('/tipo_producto',async(req,res)=>{
     })
 })
 
-router.post('/tipo_producto',async(req,res)=>{
+router.post('/tipo_producto',verifyToken,async(req,res)=>{
     const newData = await prisma.tbl_tipo_producto.create({
         data:req.body
     })
@@ -37,7 +37,7 @@ router.get("/tipo_producto/:id",async (req,res)=>{
     })
 })
 
-router.put("/tipo_producto/:id",async (req,res)=>{
+router.put("/tipo_producto/:id",verifyToken,async (req,res)=>{
     const data = await prisma.tbl_tipo_producto.update({
         where: {
             idtipoproducto: parseInt(req.params.id)
@@ -55,7 +55,7 @@ router.put("/tipo_producto/:id",async (req,res)=>{
     })
 })
 
-router.delete("/tipo_producto/:id",async (req,res)=>{
+router.delete("/tipo_producto/:id",verifyToken,async (req,res)=>{
     const data = await prisma.tbl_tipo_producto.delete({
         where: {
             idtipoproducto: parseInt(req.params.id)

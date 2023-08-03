@@ -1,5 +1,5 @@
 const express = require("express");
-const prisma = require("../db");
+const {prisma,verifyToken} = require("../db");
 const router = express.Router();
 
 router.get('/unidad_medida',async(req,res)=>{
@@ -10,7 +10,7 @@ router.get('/unidad_medida',async(req,res)=>{
     })
 })
 
-router.post('/unidad_medida',async(req,res)=>{
+router.post('/unidad_medida',verifyToken,async(req,res)=>{
     const newData = await prisma.tbl_unidad_medida.create({
         data:req.body
     })
@@ -37,7 +37,7 @@ router.get("/unidad_medida/:id",async (req,res)=>{
     })
 })
 
-router.put("/unidad_medida/:id",async (req,res)=>{
+router.put("/unidad_medida/:id",verifyToken,async (req,res)=>{
     const data = await prisma.tbl_unidad_medida.update({
         where: {
             idunidadmedida: parseInt(req.params.id)
@@ -55,7 +55,7 @@ router.put("/unidad_medida/:id",async (req,res)=>{
     })
 })
 
-router.delete("/unidad_medida/:id",async (req,res)=>{
+router.delete("/unidad_medida/:id",verifyToken,async (req,res)=>{
     const data = await prisma.tbl_unidad_medida.delete({
         where: {
             idunidadmedida: parseInt(req.params.id)

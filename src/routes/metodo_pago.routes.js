@@ -1,5 +1,5 @@
 const express = require("express");
-const prisma = require("../db");
+const {prisma,verifyToken} = require("../db");
 const router = express.Router();
 
 router.get('/metodo_pago',async(req,res)=>{
@@ -10,7 +10,7 @@ router.get('/metodo_pago',async(req,res)=>{
     })
 })
 
-router.post('/metodo_pago',async(req,res)=>{
+router.post('/metodo_pago',verifyToken,async(req,res)=>{
     const newData = await prisma.tbl_metodo_pago.create({
         data:req.body
     })
@@ -37,7 +37,7 @@ router.get("/metodo_pago/:id",async (req,res)=>{
     })
 })
 
-router.put("/metodo_pago/:id",async (req,res)=>{
+router.put("/metodo_pago/:id",verifyToken,async (req,res)=>{
     const data = await prisma.tbl_metodo_pago.update({
         where: {
             idmetodopago: parseInt(req.params.id)
