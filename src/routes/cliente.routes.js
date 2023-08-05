@@ -3,7 +3,11 @@ const {prisma,verifyToken} = require("../db");
 const router = express.Router();
 
 router.get('/cliente',async(req,res)=>{
-    const data = await prisma.tbl_cliente.findMany()
+    const data = await prisma.tbl_cliente.findMany({
+        include:{
+            tbl_usuario:true
+        }
+    })
     res.json({
         status:true,
         content:data

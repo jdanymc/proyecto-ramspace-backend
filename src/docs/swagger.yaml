@@ -31,7 +31,740 @@ tags:
     description: Metodos para manipular el objeto Articulo
   - name: Articulo_Imagen
     description: Metodos para manipular el objeto Imagen de Articulo
+  - name: Cliente
+    description: Metodos para manipular el objeto Cliente
+  - name: Descuento
+    description: Metodos para manipular el objeto Descuento
+  - name: Pedido
+    description: Metodos para manipular el objeto Pedido
+  - name: Pedido_Detalle
+    description: Metodos para manipular el objeto Pedido_Detalle
+  - name: Pedido_Descuento
+    description: Metodos para manipular el objeto Pedido_Descuento
 paths:
+  /pedido_descuento:
+    get:
+      tags: 
+        - Pedido_Descuento
+      summary: Obtiene todos los Descuentos de Pedidos
+      description: Obtiene todos los Descuentos de Pedidos registrados
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/Pedido_DescuentoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+    post:
+      tags: 
+        - Pedido_Descuento
+      summary: Guarda un Descuento de Pedido
+      description: Guarda un Descuento de Pedido
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto Pedido_Descuento
+          required: true
+          schema:
+            $ref: '#/definitions/Pedido_Descuento'
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/Pedido_DescuentoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /pedido_descuento/{id}:
+    get:
+      tags: 
+        - Pedido_Descuento
+      summary: Obtiene datos de un Descuento de Pedido
+      description: Obtiene datos de un Descuento de Pedido
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Descuento de Pedido para mostrar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/Pedido_DescuentoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse' 
+    
+    delete:
+      tags: 
+        - Pedido_Descuento
+      summary: Elimina un Descuento de Pedido
+      description: Elimina un Descuento de Pedido
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Descuento de Pedido a eliminar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: string
+            example: "OK"
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /pedido_detalle:
+    get:
+      tags: 
+        - Pedido_Detalle
+      summary: Obtiene todos los Detalles de Pedidos
+      description: Obtiene todos los Detalles de Pedidos registrados
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/Pedido_DetalleResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+    post:
+      tags: 
+        - Pedido_Detalle
+      summary: Guarda un Detalle de Pedido
+      description: Guarda un Detalle de Pedido
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto Pedido_Detalle
+          required: true
+          schema:
+            $ref: '#/definitions/Pedido_Detalle'
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/Pedido_DetalleResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /pedido_detalle/{id}:
+    get:
+      tags: 
+        - Pedido_Detalle
+      summary: Obtiene datos de un Detalle de Pedido
+      description: Obtiene datos de un Detalle de Pedido
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Detalle de Pedido para mostrar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/Pedido_DetalleResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse' 
+    put:
+      tags: 
+        - Pedido_Detalle
+      summary: Actualiza datos de un Detalle de Pedido
+      description: Actualiza datos de un Detalle de Pedido
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Detalle de Pedido para actualizar
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Objeto Pedido Detalle
+          required: true
+          schema:
+            $ref: '#/definitions/Pedido_Detalle'  
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/Pedido_DetalleResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+    delete:
+      tags: 
+        - Pedido_Detalle
+      summary: Elimina un Detalle de Pedido
+      description: Elimina un Detalle de Pedido
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Detalle de Pedido a eliminar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: string
+            example: "OK"
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /pedido:
+    get:
+      tags: 
+        - Pedido
+      summary: Obtiene todos los Pedidos
+      description: Obtiene todos los Pedidos registrados
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/PedidoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+    post:
+      tags: 
+        - Pedido
+      summary: Guarda un Pedido
+      description: Guarda un Pedido
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto Pedido
+          required: true
+          schema:
+            $ref: '#/definitions/Pedido'
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/PedidoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /pedido/{id}:
+    get:
+      tags: 
+        - Pedido
+      summary: Obtiene datos de un Pedido
+      description: Obtiene datos de un Pedido
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Pedido para mostrar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/PedidoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse' 
+    put:
+      tags: 
+        - Pedido
+      summary: Actualiza datos de un Pedido
+      description: Actualiza datos de un Pedido
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Pedido para actualizar
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Objeto Pedido
+          required: true
+          schema:
+            $ref: '#/definitions/Pedido'  
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/PedidoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+    delete:
+      tags: 
+        - Pedido
+      summary: Elimina un Pedido
+      description: Elimina un Pedido
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Pedido a eliminar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: string
+            example: "OK"
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /descuento:
+    get:
+      tags: 
+        - Descuento
+      summary: Obtiene todos los Descuentos
+      description: Obtiene todos los Descuentos registrados
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/DescuentoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+    post:
+      tags: 
+        - Descuento
+      summary: Guarda un Descuento
+      description: Guarda un Descuento
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto Descuento
+          required: true
+          schema:
+            $ref: '#/definitions/Descuento'
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/DescuentoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /descuento/{id}:
+    get:
+      tags: 
+        - Descuento
+      summary: Obtiene datos de un Descuento
+      description: Obtiene datos de un Descuento
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Descuento para mostrar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/DescuentoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse' 
+    put:
+      tags: 
+        - Descuento
+      summary: Actualiza datos de un Descuento
+      description: Actualiza datos de un Descuento
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Descuento para actualizar
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Objeto Descuento
+          required: true
+          schema:
+            $ref: '#/definitions/Descuento'  
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/DescuentoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+    delete:
+      tags: 
+        - Descuento
+      summary: Elimina un Descuento
+      description: Elimina un Descuento
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Descuento a eliminar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: string
+            example: "OK"
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /cliente:
+    get:
+      tags: 
+        - Cliente
+      summary: Obtiene todos los Clientes
+      description: Obtiene todos los Clientes registrados
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/ClienteResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+    post:
+      tags: 
+        - Cliente
+      summary: Guarda un Cliente
+      description: Guarda un Cliente
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto Cliente
+          required: true
+          schema:
+            $ref: '#/definitions/Cliente'
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/ClienteResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /cliente/{id}:
+    get:
+      tags: 
+        - Cliente
+      summary: Obtiene datos de un Cliente
+      description: Obtiene datos de un Cliente
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Cliente para mostrar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/ClienteResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse' 
+      security:
+      - BearerAuth: []
+    put:
+      tags: 
+        - Cliente
+      summary: Actualiza datos de un Cliente
+      description: Actualiza datos de un Cliente
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Cliente para actualizar
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Objeto Cliente
+          required: true
+          schema:
+            $ref: '#/definitions/Cliente'  
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/ClienteResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+    delete:
+      tags: 
+        - Cliente
+      summary: Elimina un Cliente
+      description: Elimina un Cliente
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Cliente a eliminar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: string
+            example: "OK"
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
   /articulo_imagen:
     get:
       tags: 
@@ -182,7 +915,6 @@ paths:
             $ref: '#/definitions/InvalidResponse'
       security:
       - BearerAuth: []
-
   /articulo:
     get:
       tags: 
@@ -432,7 +1164,6 @@ paths:
           description: Invalid status value
           schema:
             $ref: '#/definitions/InvalidResponse' 
-
   /ubigeo:
     get:
       tags: 
@@ -2059,6 +2790,214 @@ definitions:
       estado:
         type: integer
         example: 1
+  Cliente:
+    type: object
+    properties:
+      idusuario:
+        type: integer
+        example: 5
+      numerodocumento:
+        type: string
+        example: "12345678"
+      telefono:
+        type: string
+        example: "985478112"
+      fechanacimiento:
+        type: string
+        example: "2000-01-01"
+      direccion:
+        type: string
+        example: "Calle siempre viva"
+      estado:
+        type: integer
+        example: 1
+  ClienteResponse:
+    type: object
+    properties:
+      idcliente:
+        type: integer
+        example: 5
+      idusuario:
+        type: integer
+        example: 5
+      numerodocumento:
+        type: string
+        example: "12345678"
+      telefono:
+        type: string
+        example: "985478112"
+      fechanacimiento:
+        type: string
+        example: "2000-01-01"
+      direccion:
+        type: string
+        example: "Calle siempre viva"
+      estado:
+        type: integer
+        example: 1
+      tbl_usuario:
+         $ref: '#/definitions/UsuarioResponse'
+  Descuento:
+    type: object
+    properties:
+      descripcion:
+        type: string
+        example: "Oferta del dia"
+      codigo:
+        type: string
+        example: "SCA2514#"
+      estado:
+        type: integer
+        example: 1
+      porcentaje:
+        type: number
+        example: 10
+  DescuentoResponse:
+    type: object
+    properties:
+      iddescuento:
+        type: integer
+        example: 5
+      descripcion:
+        type: string
+        example: "Oferta del dia"
+      codigo:
+        type: string
+        example: "SCA2514#"
+      estado:
+        type: integer
+        example: 1
+      porcentaje:
+        type: number
+        example: 10 
+  Pedido:
+    type: object
+    properties:
+      idcliente:
+        type: integer
+        example: 1
+      idubigeoenvio:
+        type: integer
+        example: 25
+      idmetodopago:
+        type: integer
+        example: 2
+      nropedido:
+        type: string
+        example: "#001-2541"
+      direccionenvio:
+        type: integer
+        example: 1
+      estrellas:
+        type: integer
+        example: 5
+      acusepago:
+        type: string
+        example: "15488DSDSDSD545454"
+      estadoenvio:
+        type: integer
+        example: 1
+      observacion:
+        type: string
+        example: "Primera compra"
+  PedidoResponse:
+    type: object
+    properties:
+      idpedido:
+        type: integer
+        example: 1
+      idcliente:
+        type: integer
+        example: 1
+      idubigeoenvio:
+        type: integer
+        example: 25
+      idmetodopago:
+        type: integer
+        example: 2
+      nropedido:
+        type: string
+        example: "#001-2541"
+      direccionenvio:
+        type: integer
+        example: 1
+      estrellas:
+        type: integer
+        example: 5
+      acusepago:
+        type: string
+        example: "15488DSDSDSD545454"
+      estadoenvio:
+        type: integer
+        example: 1
+      observacion:
+        type: string
+        example: "Primera compra"
+      tbl_cliente:
+        $ref: '#/definitions/ClienteResponse'
+      tbl_metodo_pago:
+        $ref: '#/definitions/Metodo_PagoResponse'
+      tbl_ubigeo:
+        $ref: '#/definitions/UbigeoResponse'
+      tbl_pedido_descuento:
+        $ref: '#/definitions/Pedido_DescuentoResponse'
+      tbl_pedido_detalle:
+        type: array
+        items:
+          $ref: '#/definitions/Pedido_DetalleResponse'
+  Pedido_Detalle:
+    type: object
+    properties:
+      idarticulo:
+        type: integer
+        example: 1
+      cantidad:
+        type: integer
+        example: 2
+  Pedido_DetalleResponse:
+    type: object
+    properties:
+      idpedidodetalle:
+        type: integer
+        example: 1
+      idarticulo:
+        type: integer
+        example: 1
+      idpedido:
+        type: integer
+        example: 1
+      cantidad:
+        type: integer
+        example: 2
+      preciounitario:
+        type: number
+        example: 250.00
+      subtotal:
+        type: number
+        example: 500.00  
+      tbl_articulo:
+         $ref: '#/definitions/ArticuloResponse'
+  Pedido_Descuento:
+    type: object
+    properties:
+      iddescuento:
+        type: integer
+        example: 1
+      idpedido:
+        type: integer
+        example: 2
+  Pedido_DescuentoResponse:
+    type: object
+    properties:
+      idpedidodescuento:
+        type: integer
+        example: 1
+      iddescuento:
+        type: integer
+        example: 1
+      idpedido:
+        type: integer
+        example: 2         
   InvalidResponse:
     type: object
     properties:

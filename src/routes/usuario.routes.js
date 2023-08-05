@@ -127,10 +127,12 @@ router.post("/usuario/login", async (req, res) => {
     };
     const token = jwt.sign(authUsuario, config.jwt_secret, {
         expiresIn: "1h",
-      });
-      return res.status(200).json({
+    });
+    delete data.password;
+    return res.status(200).json({
         status: true,
         content: token,
+        user: data
       });
   }else{
     return res.status(401).json({
