@@ -203,7 +203,7 @@ paths:
               content:
                 type: array
                 items:
-                  $ref: '#/definitions/ArticuloResponse'
+                  $ref: '#/definitions/ArticuloIdResponse'
         '404':
           description: Invalid status value
           schema:
@@ -364,7 +364,7 @@ paths:
               content:
                 type: array
                 items:
-                  $ref: '#/definitions/Articulo_ImagenResponse'
+                  $ref: '#/definitions/ArticuloIdResponse'
         '404':
           description: Invalid status value
           schema:
@@ -395,7 +395,7 @@ paths:
               content:
                 type: array
                 items:
-                  $ref: '#/definitions/ArticuloResponse'
+                  $ref: '#/definitions/ArticuloIdResponse'
         '404':
           description: Invalid status value
           schema:

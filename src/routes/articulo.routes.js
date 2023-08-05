@@ -3,7 +3,15 @@ const {prisma,verifyToken} = require("../db");
 const router = express.Router();
 
 router.get('/articulo',async(req,res)=>{
-    const data = await prisma.tbl_articulo.findMany()
+    const data = await prisma.tbl_articulo.findMany({
+        include:{
+            tbl_articulo_imagen:true,
+            tbl_marca:true,
+            tbl_categoria:true,
+            tbl_tipo_producto:true,
+            tbl_unidad_medida:true
+        }
+    })
     res.json({
         status:true,
         content:data
@@ -36,6 +44,13 @@ router.post('/articulo/busqueda',async(req,res)=>{
                 }
             ]
         },
+        include:{
+            tbl_articulo_imagen:true,
+            tbl_marca:true,
+            tbl_categoria:true,
+            tbl_tipo_producto:true,
+            tbl_unidad_medida:true
+        }
       });
       
       if (!data || data.length === 0) {
@@ -78,6 +93,13 @@ router.get("/articulo/categoria/:id",async (req,res)=>{
     const data = await prisma.tbl_articulo.findMany({
         where: {
             idcategoria: parseInt(req.params.id)
+        },
+        include:{
+            tbl_articulo_imagen:true,
+            tbl_marca:true,
+            tbl_categoria:true,
+            tbl_tipo_producto:true,
+            tbl_unidad_medida:true
         }
     })
     if (!data) {
@@ -95,7 +117,7 @@ router.get("/articulo/imagenes/:id",async (req,res)=>{
     const data = await prisma.tbl_articulo_imagen.findMany({
         where: {
             idarticulo: parseInt(req.params.id)
-        }
+        }      
     })
     if (!data) {
         return res

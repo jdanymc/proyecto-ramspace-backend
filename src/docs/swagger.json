@@ -308,7 +308,7 @@
                 "content": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/ArticuloResponse"
+                    "$ref": "#/definitions/ArticuloIdResponse"
                   }
                 }
               }
@@ -554,7 +554,7 @@
                 "content": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/Articulo_ImagenResponse"
+                    "$ref": "#/definitions/ArticuloIdResponse"
                   }
                 }
               }
@@ -601,7 +601,7 @@
                 "content": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/ArticuloResponse"
+                    "$ref": "#/definitions/ArticuloIdResponse"
                   }
                 }
               }
