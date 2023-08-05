@@ -5,8 +5,19 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { config } = require("../config");
 
-router.get("/usuario", async (req, res) => {
-  const data = await prisma.tbl_usuario.findMany();
+router.get("/usuario",verifyToken, async (req, res) => {
+  const data = await prisma.tbl_usuario.findMany({
+    select:{
+      idusuario:true,
+      email:true,
+      tipo:true,
+      primerapellido:true,
+      segundoapellido:true,
+      nombres:true,
+      imagen:true,
+      estado:true,
+    }
+  });
   res.json({
     status: true,
     content: data,
@@ -27,6 +38,22 @@ router.post("/usuario", async (req, res) => {
   });
 });
 
+router.post("/usuario/registro", async (req, res) => {
+  const passwordEncriptado = bcrypt.hashSync(req.body.password, 10);
+  const newData = await prisma.tbl_usuario.create({
+    data: {
+      email: req.body.email,
+      password: passwordEncriptado,
+      tipo: 3,
+    },
+  });
+  delete newData.password;
+  res.json({
+    status: true,
+    content: newData,
+  });
+});
+
 router.get("/usuario/:id", async (req, res) => {
   const data = await prisma.tbl_usuario.findUnique({
     where: {
@@ -38,6 +65,7 @@ router.get("/usuario/:id", async (req, res) => {
       .status(404)
       .json({ status: false, error: "No se encontro el usuario" });
   }
+  delete data.password;
   res.json({
     status: true,
     content: data,
@@ -56,6 +84,7 @@ router.put("/usuario/:id",verifyToken, async (req, res) => {
       .status(404)
       .json({ status: false, error: "No se encontro el usuario" });
   }
+  delete data.password;
   res.json({
     status: true,
     content: data,

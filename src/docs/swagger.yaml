@@ -1,0 +1,2070 @@
+swagger: '2.0'
+info:
+  description: Esta es la documentación para uso del API para la aplicación ramspace
+  version: 1.0.0
+  title: RamSpace API
+  contact:
+    email: jdany.mc@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+schemes:
+  - http
+host: localhost:3000
+basePath: /api
+tags:
+  - name: Marca
+    description: Metodos para manipular el objeto Marca
+  - name: Categoria
+    description: Metodos para manipular el objeto Categoria
+  - name: Usuario
+    description: Metodos para manipular el objeto Usuario
+  - name: Unidad_Medida 
+    description: Metodos para manipular el objeto Unidad de Medida
+  - name: Metodo_Pago 
+    description: Metodos para manipular el objeto Metodo de Pago
+  - name: Tipo_Producto 
+    description: Metodos para manipular el objeto Tipo de Producto
+  - name: Ubigeo 
+    description: Metodos para manipular el objeto Ubigeo
+  - name: Articulo
+    description: Metodos para manipular el objeto Articulo
+  - name: Articulo_Imagen
+    description: Metodos para manipular el objeto Imagen de Articulo
+paths:
+  /articulo_imagen:
+    get:
+      tags: 
+        - Articulo_Imagen
+      summary: Obtiene todas las Imagenes de Articulos
+      description: Obtiene todas las Imagenes de Articulos registrados
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/Articulo_ImagenResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+    post:
+      tags: 
+        - Articulo_Imagen
+      summary: Guarda una Imagen de Articulo
+      description: Guarda un Imagen de Articulo
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto Imagen de Articulo
+          required: true
+          schema:
+            $ref: '#/definitions/Articulo_Imagen'
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/Articulo_ImagenResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /articulo_imagen/{id}:
+    get:
+      tags: 
+        - Articulo_Imagen
+      summary: Obtiene datos de una Imagen de Articulo
+      description: Obtiene datos de una Imagen de Articulo
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Imagen de Articulo para mostrar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/Articulo_ImagenResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse' 
+    put:
+      tags: 
+        - Articulo_Imagen
+      summary: Actualiza datos de una Imagen de Articulo
+      description: Actualiza datos de un a Imagen de Articulo
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Imagen de Articulo para actualizar
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Objeto Imagen de Articulo
+          required: true
+          schema:
+            $ref: '#/definitions/Articulo_Imagen'  
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/Articulo_ImagenResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+    delete:
+      tags: 
+        - Articulo_Imagen
+      summary: Elimina una Imagen de Articulo
+      description: Elimina una Imagen de Articulo
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Imagen de Articulo a eliminar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: string
+            example: "OK"
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+
+  /articulo:
+    get:
+      tags: 
+        - Articulo
+      summary: Obtiene todos los Articulos
+      description: Obtiene todos los Articulos registrados
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/ArticuloResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+    post:
+      tags: 
+        - Articulo
+      summary: Guarda un Articulo
+      description: Guarda un Articulo
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto Articulo
+          required: true
+          schema:
+            $ref: '#/definitions/Articulo'
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/ArticuloResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /articulo/{id}:
+    get:
+      tags: 
+        - Articulo
+      summary: Obtiene datos de un Articulo
+      description: Obtiene datos de un Articulo
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Articulo para mostrar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/ArticuloIdResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse' 
+    put:
+      tags: 
+        - Articulo
+      summary: Actualiza datos de un Articulo
+      description: Actualiza datos de un Articulo
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Articulo para actualizar
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Objeto Articulo
+          required: true
+          schema:
+            $ref: '#/definitions/Articulo'  
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/ArticuloResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+    delete:
+      tags: 
+        - Articulo
+      summary: Elimina un Articulo
+      description: Elimina un Articulo
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Articulo a eliminar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: string
+            example: "OK"
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /articulo/busqueda:
+    post:
+      tags: 
+        - Articulo
+      summary: Obtiene artículos segun un parametro de busqueda
+      description: Obtiene articulos segun un parametro de busqueda
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto parametro de busqueda
+          required: true
+          schema:
+            type: object
+            properties:
+              busqueda:
+                type: string
+                example: "monitor"
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/Articulo_ImagenResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse' 
+  /articulo/categoria/{id}:
+    get:
+      tags: 
+        - Articulo
+      summary: Obtiene artículos segun categoria
+      description: Obtiene articulos segun categoria
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de categoria para mostrar
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/ArticuloResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse' 
+  /articulo/imagenes/{id}:
+    get:
+      tags: 
+        - Articulo
+      summary: Obtiene las imagenes de un Articulo
+      description: Obtiene las imagenes de un Articulo
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Articulo para mostrar las imagenes
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/Articulo_ImagenResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse' 
+
+  /ubigeo:
+    get:
+      tags: 
+        - Ubigeo
+      summary: Obtiene todos los Ubigeo
+      description: Obtiene todos los Ubigeo registrados
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/UbigeoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+    post:
+      tags: 
+        - Ubigeo
+      summary: Guarda un Ubigeo
+      description: Guarda un Ubigeo
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto Ubigeo
+          required: true
+          schema:
+            $ref: '#/definitions/Ubigeo'
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/UbigeoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /ubigeo/{id}:
+    get:
+      tags: 
+        - Ubigeo
+      summary: Obtiene datos de un Ubigeo
+      description: Obtiene datos de un Ubigeo
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Ubigeo para mostrar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/UbigeoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse' 
+    put:
+      tags: 
+        - Ubigeo
+      summary: Actualiza datos de un Ubigeo
+      description: Actualiza datos de un Ubigeo
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Ubigeo para actualizar
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Objeto Ubigeo
+          required: true
+          schema:
+            $ref: '#/definitions/Ubigeo'  
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/UbigeoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+    delete:
+      tags: 
+        - Ubigeo
+      summary: Elimina un Ubigeo
+      description: Elimina un Ubigeo
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Ubigeo a eliminar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: string
+            example: "OK"
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /tipo_producto:
+    get:
+      tags: 
+        - Tipo_Producto
+      summary: Obtiene todos los Tipos de Producto
+      description: Obtiene todos los Tipos de Producto registrados
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/Tipo_ProductoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+    post:
+      tags: 
+        - Tipo_Producto
+      summary: Guarda un Tipo de Producto
+      description: Guarda un Tipo de Producto
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto Tipo de Producto
+          required: true
+          schema:
+            $ref: '#/definitions/Tipo_Producto'
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/Tipo_ProductoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /tipo_producto/{id}:
+    get:
+      tags: 
+        - Tipo_Producto
+      summary: Obtiene datos de un Tipo de Producto
+      description: Obtiene datos de un Tipo de Producto
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Tipo de Producto para mostrar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/Tipo_ProductoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse' 
+    put:
+      tags: 
+        - Tipo_Producto
+      summary: Actualiza datos de un Tipo de Producto
+      description: Actualiza datos de un Tipo de Producto
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Tipo de Producto para actualizar
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Objeto Tipo de Producto
+          required: true
+          schema:
+            $ref: '#/definitions/Tipo_Producto'  
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/Tipo_ProductoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+    delete:
+      tags: 
+        - Tipo_Producto
+      summary: Elimina un Tipo de Producto
+      description: Elimina un Tipo de Producto
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Tipo de Producto a eliminar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: string
+            example: "OK"
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /metodo_pago:
+    get:
+      tags: 
+        - Metodo_Pago
+      summary: Obtiene todas los Metodos de Pago
+      description: Obtiene todas los Metodos de Pago registrados
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/Metodo_PagoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+    post:
+      tags: 
+        - Metodo_Pago
+      summary: Guarda un Metodo de Pago
+      description: Guarda un Metodo de Pago
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto Metodo de Pago
+          required: true
+          schema:
+            $ref: '#/definitions/Metodo_Pago'
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/Metodo_PagoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /metodo_pago/{id}:
+    get:
+      tags: 
+        - Metodo_Pago
+      summary: Obtiene datos de un Metodo de Pago
+      description: Obtiene datos de un Metodo de Pago
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Metodo de Pago para mostrar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/Metodo_PagoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse' 
+    put:
+      tags: 
+        - Metodo_Pago
+      summary: Actualiza datos de un Metodo de Pago
+      description: Actualiza datos de un Metodo de Pago
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Metodo de Pago para actualizar
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Objeto Metodo de Pago
+          required: true
+          schema:
+            $ref: '#/definitions/Metodo_Pago'  
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/Metodo_PagoResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+    delete:
+      tags: 
+        - Metodo_Pago
+      summary: Elimina un Metodo de Pago
+      description: Elimina un Metodo de Pago
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Metodo de Pago a eliminar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: string
+            example: "OK"
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /unidad_medida:
+    get:
+      tags: 
+        - Unidad_Medida
+      summary: Obtiene todas las Unidades de Medida
+      description: Obtiene todas las Unidades de Medida registradas
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/Unidad_MedidaResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+    post:
+      tags: 
+        - Unidad_Medida
+      summary: Guarda una Unidad de Medida
+      description: Guarda una Unidad de Medida
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto Unidad de Medida
+          required: true
+          schema:
+            $ref: '#/definitions/Unidad_Medida'
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/Unidad_MedidaResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /unidad_medida/{id}:
+    get:
+      tags: 
+        - Unidad_Medida
+      summary: Obtiene datos de una Unidad de Medida
+      description: Obtiene datos de una Unidad de Medida
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Unidad de Medida para mostrar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/Unidad_MedidaResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse' 
+    put:
+      tags: 
+        - Unidad_Medida
+      summary: Actualiza datos de una Unidad de Medida
+      description: Actualiza datos de una Unidad de Medida
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Unidad de Medida para actualizar
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Objeto Unidad de Medida
+          required: true
+          schema:
+            $ref: '#/definitions/Unidad_Medida'  
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/Unidad_MedidaResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+    delete:
+      tags: 
+        - Unidad_Medida
+      summary: Elimina una Unidad de Medida
+      description: Elimina una Unidad de Medida
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Unidad de Medida a eliminar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: string
+            example: "OK"
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /marca:
+    get:
+      tags: 
+        - Marca
+      summary: Obtiene todas las Marcas
+      description: Obtiene todas las Marcas registradas
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/MarcaResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+    post:
+      tags: 
+        - Marca
+      summary: Guarda una Marca
+      description: Guarda una Marca
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto Marca
+          required: true
+          schema:
+            $ref: '#/definitions/Marca'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/MarcaResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /marca/{id}:
+    get:
+      tags: 
+        - Marca
+      summary: Obtiene datos de una Marca
+      description: Obtiene datos de una Marca
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Marca para mostrar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/MarcaIdResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse' 
+    put:
+      tags: 
+        - Marca
+      summary: Actualiza datos de una Marca
+      description: Actualiza datos de una Marca
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Marca para actualizar
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Objeto Marca
+          required: true
+          schema:
+            $ref: '#/definitions/Marca'  
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/MarcaResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+    delete:
+      tags: 
+        - Marca
+      summary: Elimina una Marca
+      description: Elimina una Marca
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Marca a eliminar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: string
+            example: "OK"
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /categoria:
+    get:
+      tags: 
+        - Categoria
+      summary: Obtiene todas las Categorias
+      description: Obtiene todas las Categorias registradas
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/CategoriaResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+    post:
+      tags: 
+        - Categoria
+      summary: Guarda una Categoria
+      description: Guarda una Categoria
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto Categoria
+          required: true
+          schema:
+            $ref: '#/definitions/Categoria'
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/CategoriaResponse'
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /categoria/{id}:
+    get:
+      tags: 
+        - Categoria
+      summary: Obtiene datos de una Categoria
+      description: Obtiene datos de una Categoria
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Categoria para mostrar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/CategoriaResponse'
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse' 
+    put:
+      tags: 
+        - Categoria
+      summary: Actualiza datos de una Categoria
+      description: Actualiza datos de una Categoria
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Categoria para actualizar
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Objeto Categoria
+          required: true
+          schema:
+            $ref: '#/definitions/Categoria'  
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/CategoriaResponse'
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+    delete:
+      tags: 
+        - Categoria
+      summary: Elimina una Categoria
+      description: Elimina una Categoria
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Categoria a eliminar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: string
+            example: "OK"
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /categoria/padre/{id}:
+    get:
+      tags: 
+        - Categoria
+      summary: Obtiene las categorias hijas de una Categoria
+      description: Obtiene las categorias hijas de una Categoria
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Categoria padre para mostrar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/CategoriaResponse'
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse' 
+  /categoria-all:
+    get:
+      tags: 
+        - Categoria
+      summary: Obtiene todo el arbol de Categorias
+      description: Obtiene todo el arbol de Categorias
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/CategoriaAllResponse'
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+  /usuario:
+    get:
+      tags: 
+        - Usuario
+      summary: Obtiene todas los Usuarios
+      description: Obtiene todas los Usuarios
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: array
+                items:
+                  $ref: '#/definitions/UsuarioResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+    post:
+      tags: 
+        - Usuario
+      summary: Guarda un Usuario
+      description: Guarda un Usuario
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto Usuario
+          required: true
+          schema:
+            $ref: '#/definitions/Marca'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/UsuarioResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /usuario/registro:
+    post:
+      tags: 
+        - Usuario
+      summary: Registra un Usuario
+      description: Registra un Usuario
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto Usuario
+          required: true
+          schema:
+            $ref: '#/definitions/UsuarioLogin'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/UsuarioResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /usuario/{id}:
+    get:
+      tags: 
+        - Usuario
+      summary: Obtiene datos de un Usuario
+      description: Obtiene datos de un Usuario
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Usuario para mostrar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/UsuarioResponse'
+        '404':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse' 
+      security:
+      - BearerAuth: []
+    put:
+      tags: 
+        - Usuario
+      summary: Actualiza datos de un Usuario
+      description: Actualiza datos de un Usuario
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Usuario para actualizar
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Objeto Usuario
+          required: true
+          schema:
+            $ref: '#/definitions/Usuario'  
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                $ref: '#/definitions/UsuarioResponse'
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+    delete:
+      tags: 
+        - Usuario
+      summary: Elimina un Usuario
+      description: Elimina un Usuario
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id de Usuario a eliminar
+          required: true
+          type: integer
+          
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: string
+            example: "OK"
+        '404':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+      security:
+      - BearerAuth: []
+  /usuario/login:
+    post:
+      tags: 
+        - Usuario
+      summary: Login de Usuario
+      description: Login de Usuario
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto Marca
+          required: true
+          schema:
+            $ref: '#/definitions/UsuarioLogin'
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+                example: true
+              content:
+                type: string
+                example: "token here"
+        '401':
+          description: Invalid Status Value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+  
+securityDefinitions:
+  BearerAuth:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+definitions:
+  Marca:
+    type: object
+    properties:
+      descripcion:
+        type: string
+        example: "Mi Marca"
+      estado:
+        type: integer
+        example: 1
+  MarcaResponse:
+    type: object
+    properties:
+      idmarca:
+        type: integer
+        example: 10
+      descripcion:
+        type: string
+        example: "Mi Marca"
+      estado:
+        type: integer
+        example: 1
+  MarcaIdResponse:
+    type: object
+    properties:
+      idmarca:
+        type: integer
+        example: 10
+      descripcion:
+        type: string
+        example: "Mi Marca"
+      estado:
+        type: integer
+        example: 1      
+      tbl_articulo:
+        type: array
+        items: 
+          $ref: '#/definitions/ArticuloResponse'  
+  Categoria:
+    type: object
+    properties:
+      descripcion:
+        type: string
+        example: "Mi Categoria"
+      estado:
+        type: integer
+        example: 1
+      idcategoriapadre:
+        type: integer
+        example: 2
+  CategoriaResponse:
+    type: object
+    properties:
+      idcategoria:
+        type: integer
+        example: 10
+      descripcion:
+        type: string
+        example: "Mi Categoria"
+      estado:
+        type: integer
+        example: 1
+      idcategoriapadre:
+        type: integer
+        example: 2
+      tbl_articulo:
+        type: array
+        items: 
+          $ref: '#/definitions/ArticuloResponse' 
+  CategoriaIdResponse:
+    type: object
+    properties:
+      idcategoria:
+        type: integer
+        example: 10
+      descripcion:
+        type: string
+        example: "Mi Categoria"
+      estado:
+        type: integer
+        example: 1
+      idcategoriapadre:
+        type: integer
+        example: 2
+  CategoriaAllResponse:
+    type: object
+    properties:
+      idcategoria:
+        type: integer
+        example: 10
+      descripcion:
+        type: string
+        example: "Mi Categoria Padre"
+      estado:
+        type: integer
+        example: 1
+      idcategoriapadre:
+        type: integer
+        example: 2
+      other_tbl_categoria:
+        type: array
+        items: 
+          $ref: '#/definitions/CategoriaAllHijoResponse'
+  CategoriaAllHijoResponse:
+    type: object
+    properties:
+      idcategoria:
+        type: integer
+        example: 12
+      descripcion:
+        type: string
+        example: "Mi Categoria Hija"
+      estado:
+        type: integer
+        example: 1
+      idcategoriapadre:
+        type: integer
+        example: 10
+  Usuario:
+    type: object
+    properties:
+      email:
+        type: string
+        example: "admin@mail.com"
+      password:
+        type: string
+        example: "admin"
+      tipo:
+        type: integer
+        example: 1
+      primerapellido:
+        type: string
+        example: "Perez"
+      segundoapellido:
+        type: string
+        example: "Perez"
+      nombres:
+        type: string
+        example: "Juan"
+      imagen:
+        type: string
+        example: "http:/www.images.com/img_01.jpg"
+      estado:
+        type: integer
+        example: 1
+  UsuarioResponse:
+    type: object
+    properties:
+      idusuario:
+        type: integer
+        example: "1"
+      email:
+        type: string
+        example: "admin@mail.com"
+      tipo:
+        type: integer
+        example: 1
+      primerapellido:
+        type: string
+        example: "Perez"
+      segundoapellido:
+        type: string
+        example: "Perez"
+      nombres:
+        type: string
+        example: "Juan"
+      imagen:
+        type: string
+        example: "http:/www.images.com/img_01.jpg"
+      estado:
+        type: integer
+        example: 1
+  UsuarioLogin:
+    type: object
+    properties:
+      email:
+        type: string
+        example: "admin@mail.com"
+      password:
+        type: string
+        example: "admin"
+  Articulo:
+    type: object
+    properties:
+      idarticulo:
+        type: integer
+        example: 10
+      idmarca:
+        type: integer
+        example: 10
+      idtipoproducto:
+        type: integer
+        example: 10
+      idcategoria:
+        type: integer
+        example: 10
+      idunidadmedida:
+        type: integer
+        example: 10
+      nombre:
+        type: string
+        example: "Mi Articulo"
+      descripcion:
+        type: string
+        example: "Mi Descripcion"
+      et:
+        type: string
+        example: "Mi et"
+      precio:
+        type: number
+        example: "99.99"
+      imagen:
+        type: string
+        example: "http:/www.images.com/img_01.jpg"
+      stock:
+        type: integer
+        example: 10
+      sku:
+        type: string
+        example: "Mi sku"
+      estado:
+        type: integer
+        example: 1
+  ArticuloResponse:
+    type: object
+    properties:
+      idmarca:
+        type: integer
+        example: 10
+      idtipoproducto:
+        type: integer
+        example: 10
+      idcategoria:
+        type: integer
+        example: 10
+      idunidadmedida:
+        type: integer
+        example: 10
+      nombre:
+        type: string
+        example: "Mi Articulo"
+      descripcion:
+        type: string
+        example: "Mi Descripcion"
+      et:
+        type: string
+        example: "Mi et"
+      precio:
+        type: number
+        example: "99.99"
+      imagen:
+        type: string
+        example: "http:/www.images.com/img_01.jpg"
+      stock:
+        type: integer
+        example: 10
+      sku:
+        type: string
+        example: "Mi sku"
+      estado:
+        type: integer
+        example: 1
+  ArticuloIdResponse:
+    type: object
+    properties:
+      idmarca:
+        type: integer
+        example: 10
+      idtipoproducto:
+        type: integer
+        example: 10
+      idcategoria:
+        type: integer
+        example: 10
+      idunidadmedida:
+        type: integer
+        example: 10
+      nombre:
+        type: string
+        example: "Mi Articulo"
+      descripcion:
+        type: string
+        example: "Mi Descripcion"
+      et:
+        type: string
+        example: "Mi et"
+      precio:
+        type: number
+        example: "99.99"
+      imagen:
+        type: string
+        example: "http:/www.images.com/img_01.jpg"
+      stock:
+        type: integer
+        example: 10
+      sku:
+        type: string
+        example: "Mi sku"
+      estado:
+        type: integer
+        example: 1
+      tbl_articulo_imagen:
+        type: array
+        items: 
+          $ref: '#/definitions/Articulo_ImagenResponse'
+      tbl_marca:
+        $ref: '#/definitions/MarcaResponse'
+      tbl_categoria:
+        $ref: '#/definitions/CategoriaIdResponse'
+      tbl_tipo_producto:
+        $ref: '#/definitions/Tipo_ProductoResponse'
+      tbl_unidad_medida:
+        $ref: '#/definitions/Unidad_MedidaResponse'
+  Articulo_Imagen:
+    type: object
+    properties:
+      idarticulo:
+        type: integer
+        example: 10
+      imagen:
+        type: string
+        example: "http:/www.images.com/img_01.jpg"
+  Articulo_ImagenResponse:
+    type: object
+    properties:
+      idarticuloimagen:
+        type: integer
+        example: 10
+      idarticulo:
+        type: integer
+        example: 10
+      imagen:
+        type: string
+        example: "http:/www.images.com/img_01.jpg"
+  Unidad_Medida:
+    type: object
+    properties:
+      descripcion:
+        type: string
+        example: "Mi Unidad de Medida"
+      estado:
+        type: integer
+        example: 1
+  Unidad_MedidaResponse:
+    type: object
+    properties:
+      idunidadmedida:
+        type: integer
+        example: 10
+      descripcion:
+        type: string
+        example: "Mi Unidad de Medida"
+      estado:
+        type: integer
+        example: 1
+  Metodo_Pago:
+    type: object
+    properties:
+      descripcion:
+        type: string
+        example: "Mi Metodo de Pago"
+      estado:
+        type: integer
+        example: 1
+  Metodo_PagoResponse:
+    type: object
+    properties:
+      idmetodopago:
+        type: integer
+        example: 10
+      descripcion:
+        type: string
+        example: "Mi Metodo de Pago"
+      estado:
+        type: integer
+        example: 1
+  Tipo_Producto:
+    type: object
+    properties:
+      descripcion:
+        type: string
+        example: "Mi Tipo de Producto"
+      estado:
+        type: integer
+        example: 1
+  Tipo_ProductoResponse:
+    type: object
+    properties:
+      idtipoproducto:
+        type: integer
+        example: 10
+      descripcion:
+        type: string
+        example: "Mi Tipo de Producto"
+      estado:
+        type: integer
+        example: 1
+  Ubigeo:
+    type: object
+    properties:
+      pais:
+        type: string
+        example: "Perú"
+      departamento:
+        type: string
+        example: "01"
+      provincia:
+        type: string
+        example: "01"
+      distrito:
+        type: string
+        example: "01"
+      descripcion:
+        type: string
+        example: "Lima"
+      estado:
+        type: integer
+        example: 1
+  UbigeoResponse:
+    type: object
+    properties:
+      idubigeo:
+        type: integer
+        example: 10
+      pais:
+        type: string
+        example: "Perú"
+      departamento:
+        type: string
+        example: "01"
+      provincia:
+        type: string
+        example: "01"
+      distrito:
+        type: string
+        example: "01"
+      descripcion:
+        type: string
+        example: "Lima"
+      estado:
+        type: integer
+        example: 1
+  InvalidResponse:
+    type: object
+    properties:
+      status:
+        type: boolean
+        example: false
+      error:
+        type: string
+        example: "No se encontro registro"

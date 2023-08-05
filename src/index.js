@@ -1,5 +1,6 @@
 const express = require("express");
 const {config} = require("./config");
+const fs = require('fs');
 
 const articulo_imagenApi = require("./routes/articulo_imagen.routes");
 const articuloApi = require("./routes/articulo.routes");
@@ -20,8 +21,15 @@ const cors = require('cors')
 
 const app = express();
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./docs/swagger.json');
+const customCss = fs.readFileSync((process.cwd()+"/src/docs/swagger.css"), 'utf8');
+
+
 app.use(cors())
 app.use(express.json());
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {customCss}));
 
 app.get('/',(req,res)=>{
     res.json({
